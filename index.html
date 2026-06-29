@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aplikacion Matematikë - Version i Përmirësuar</title>
+  <style>
+:root{
+  --bg:#08111f;--bg2:#0f172a;--panel:#101b2f;--panel2:#14233d;--text:#e5e7eb;--muted:#9aa9bd;
+  --line:rgba(148,163,184,.25);--accent:#38bdf8;--accent2:#a78bfa;--good:#22c55e;--bad:#ef4444;
+  --warn:#f59e0b;--paper:#f8fafc;--ink:#0f172a;--radius:18px;--shadow:0 18px 50px rgba(0,0,0,.28)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 5% 0,rgba(56,189,248,.18),transparent 28%),radial-gradient(circle at 92% 4%,rgba(167,139,250,.16),transparent 25%),linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);min-height:100vh}button,input,select{font:inherit;border:1px solid var(--line);border-radius:13px;background:rgba(15,23,42,.82);color:var(--text);padding:11px 12px}button{cursor:pointer;font-weight:800}button:hover{border-color:rgba(56,189,248,.65)}button:disabled{opacity:.55;cursor:not-allowed}.wrap{max-width:1240px;margin:0 auto}.hidden{display:none!important}.muted{color:var(--muted)}.mini{font-size:12px}.top{position:sticky;top:0;z-index:20;background:rgba(8,17,31,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}header{padding:22px 18px 16px}.hero{display:grid;grid-template-columns:1.45fr .9fr;gap:18px;align-items:center}h1{margin:0;font-size:clamp(27px,4vw,48px);letter-spacing:-.045em;line-height:1.02}h2,h3{margin-top:0}.subtitle{margin:10px 0 0;color:var(--muted);line-height:1.55}.statusGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:linear-gradient(135deg,rgba(56,189,248,.13),rgba(167,139,250,.11));border:1px solid var(--line);border-radius:var(--radius);padding:13px}.stat b{font-size:20px;color:white;display:block}.bar{height:10px;background:rgba(148,163,184,.18);border-radius:999px;margin:10px 0;overflow:hidden}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px}.nav{display:flex;gap:9px;overflow:auto;padding:0 18px 14px}.nav button{white-space:nowrap;background:rgba(17,28,49,.74)}.nav button.active{background:linear-gradient(135deg,rgba(56,189,248,.24),rgba(167,139,250,.2));border-color:rgba(56,189,248,.6)}main{padding:22px 18px 60px}.layout{display:grid;grid-template-columns:260px 1fr;gap:18px}aside{position:sticky;top:146px;align-self:start;background:rgba(16,27,47,.88);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}.sideTitle{font-weight:900;margin-bottom:10px}.topicList{display:grid;gap:8px}.topicBtn{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left}.topicBtn.active{background:linear-gradient(135deg,rgba(56,189,248,.22),rgba(167,139,250,.18));border-color:rgba(56,189,248,.55)}.pill{font-size:12px;padding:3px 8px;border-radius:999px;background:rgba(148,163,184,.16);color:#cbd5e1}.panel{background:rgba(16,27,47,.88);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}.panel.tight{padding:13px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.note{background:rgba(15,23,42,.72);border:1px solid var(--line);border-radius:14px;padding:13px;line-height:1.55}.warn{border-color:rgba(245,158,11,.34);background:rgba(245,158,11,.08)}.goodBox{border-color:rgba(34,197,94,.34);background:rgba(34,197,94,.08)}.badBox{border-color:rgba(239,68,68,.34);background:rgba(239,68,68,.08)}.controls{display:grid;grid-template-columns:1.2fr .75fr .75fr .75fr auto;gap:10px;margin-bottom:14px}.cards{display:grid;gap:12px}.card{background:rgba(16,27,47,.92);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.card.mastered{border-color:rgba(34,197,94,.45)}.card.weak{border-color:rgba(239,68,68,.45)}.cardHead{padding:16px}.meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.tag{font-size:12px;color:#cbd5e1;border:1px solid rgba(148,163,184,.23);border-radius:999px;padding:4px 8px;background:rgba(148,163,184,.1)}.tag.good{color:#bbf7d0;border-color:rgba(34,197,94,.36);background:rgba(34,197,94,.11)}.tag.bad{color:#fecaca;border-color:rgba(239,68,68,.36);background:rgba(239,68,68,.11)}.tag.warn{color:#fde68a;border-color:rgba(245,158,11,.36);background:rgba(245,158,11,.11)}.tag.accent{color:#bae6fd;border-color:rgba(56,189,248,.42);background:rgba(56,189,248,.12)}.question{font-size:17px;line-height:1.55;color:white}.hint{margin-top:12px;display:none}.card.showHint .hint{display:block}.cardBody{padding:16px;display:none;border-top:1px solid var(--line)}.card.open .cardBody{display:block}.method{color:#bae6fd;margin-bottom:12px;font-weight:900}ol.steps{margin:0;padding-left:22px;display:grid;gap:9px}ol.steps li{line-height:1.55;color:#e2e8f0}.answer{margin-top:12px;padding:12px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:14px;color:#dcfce7;font-weight:900}.buttons{display:flex;gap:10px;flex-wrap:wrap;padding:0 16px 16px}.smallBtn{width:auto;padding:9px 11px;font-size:14px}.primaryBtn{background:linear-gradient(135deg,rgba(56,189,248,.25),rgba(167,139,250,.22))}.dangerBtn{background:rgba(239,68,68,.13);border-color:rgba(239,68,68,.35)}.successBtn{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.36)}.formulaGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.formula{background:rgba(15,23,42,.72);border:1px solid var(--line);border-radius:14px;padding:12px;line-height:1.5}.formula b{color:white}.examConfig{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px}.timer{font-size:30px;font-weight:950;color:white}.empty{padding:24px;text-align:center;color:var(--muted)}.printBox{background:var(--paper);color:var(--ink);border-radius:16px;padding:18px;line-height:1.55}.printBox h3{color:var(--ink)}.table{width:100%;border-collapse:collapse}.table th,.table td{border-bottom:1px solid var(--line);padding:10px;text-align:left}.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:rgba(148,163,184,.14);border:1px solid var(--line);border-radius:8px;padding:2px 6px}.split{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.right{margin-left:auto}.stickyActions{position:sticky;bottom:14px;background:rgba(8,17,31,.86);border:1px solid var(--line);border-radius:16px;padding:10px;margin-top:14px;backdrop-filter:blur(12px)}
+@media(max-width:980px){.hero,.layout,.grid2,.grid3,.formulaGrid{grid-template-columns:1fr}aside{position:static}.controls,.examConfig{grid-template-columns:1fr 1fr}.statusGrid{grid-template-columns:1fr 1fr}.right{margin-left:0}}
+@media(max-width:640px){.controls,.examConfig,.statusGrid{grid-template-columns:1fr}.buttons{display:grid}.buttons button{width:100%}main{padding-left:12px;padding-right:12px}header{padding-left:12px;padding-right:12px}.nav{padding-left:12px;padding-right:12px}}
+@media print{body{background:white;color:black}.top,aside,.controls,.buttons,.stickyActions{display:none!important}main{padding:0}.layout{display:block}.panel,.card{box-shadow:none;background:white;color:black;border:1px solid #bbb}.cardBody,.hint{display:block!important}.tag,.question,.method,ol.steps li,.muted{color:black}.answer{color:black;background:#f5f5f5;border:1px solid #ddd}}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <header class="wrap hero">
+      <div>
+        <h1>Matematikë për provim</h1>
+        <p class="subtitle">Version i përmirësuar: pyetjet reale nga gjeneratat e kaluara mbeten baza, ndërsa aplikacioni shton variante të ngjashme që ta mësosh metodën, jo vetëm përgjigjen.</p>
+      </div>
+      <div class="statusGrid">
+        <div class="stat"><b id="masteredCount">0</b><span class="muted">të zotëruara</span><div class="bar"><span id="progressBar"></span></div></div>
+        <div class="stat"><b id="bankCount">0</b><span class="muted">pyetje gjithsej</span><div class="mini muted" id="bankBreakdown">—</div></div>
+      </div>
+    </header>
+    <nav class="wrap nav" id="modeNav">
+      <button class="active" data-mode="dashboard">Paneli</button>
+      <button data-mode="learn">Mëso</button>
+      <button data-mode="drill">Variante</button>
+      <button data-mode="exam">Provim</button>
+      <button data-mode="mistakes">Gabimet</button>
+      <button data-mode="formulas">Formula</button>
+      <button data-mode="plan">Plan mësimi</button>
+    </nav>
+  </div>
+
+  <main class="wrap">
+    <div class="layout">
+      <aside>
+        <div class="sideTitle">Temat</div>
+        <div class="topicList" id="topicList"></div>
+      </aside>
+
+      <section>
+        <div id="dashboardView">
+          <div class="panel">
+            <h2>Si ta përdorësh për provim</h2>
+            <div class="grid3">
+              <div class="note goodBox"><b>1. Pyetjet origjinale</b><br>Fillimisht zgjidh pyetjet që vijnë nga fotot. Këto janë më të vlefshmet sepse janë modeli real i provimit.</div>
+              <div class="note"><b>2. Variantet</b><br>Pasi e kupton një metodë, bëj 5–10 variante me numra të ndryshëm. Këtu ndodh mësimi i vërtetë.</div>
+              <div class="note warn"><b>3. Gabimet</b><br>Çdo ushtrim që e shënon gabim ruhet te “Gabimet”. Para provimit, përsërit vetëm ato.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <h2>Gjendja jote</h2>
+            <div class="grid3" id="dashboardStats"></div>
+          </div>
+          <div class="panel">
+            <h2>Temat më të rëndësishme</h2>
+            <table class="table" id="topicTable"></table>
+          </div>
+        </div>
+
+        <div id="learnView" class="hidden">
+          <div class="controls">
+            <input id="searchBox" placeholder="Kërko: derivat, limit, integral, elipsë..." />
+            <select id="difficultyBox"><option value="all">Çdo vështirësi</option><option value="lehtë">Lehtë</option><option value="mesatare">Mesatare</option><option value="e vështirë">E vështirë</option></select>
+            <select id="sourceBox"><option value="all">Origjinale + variante</option><option value="original">Vetëm origjinale</option><option value="variant">Vetëm variante</option><option value="wrong">Vetëm të gabuara</option><option value="unmastered">Vetëm jo të zotëruara</option></select>
+            <select id="sortBox"><option value="examFirst">Origjinalet së pari</option><option value="topic">Sipas temës</option><option value="hardFirst">Të vështirat së pari</option><option value="weakFirst">Gabimet së pari</option></select>
+            <button class="primaryBtn" id="printBtn">Printo / PDF</button>
+          </div>
+          <div class="panel tight split">
+            <span><b>Rregulli:</b> mos e hap zgjidhjen menjëherë. Shtyp <span class="kbd">Hint</span>, provoje, pastaj kontrolloje.</span>
+            <button class="smallBtn right" id="showAllBtn">Hap të gjitha zgjidhjet</button>
+          </div>
+          <div class="cards" id="cards"></div>
+        </div>
+
+        <div id="drillView" class="hidden">
+          <div class="panel">
+            <h2>Stërvitje me variante</h2>
+            <p class="muted">Këto janë variante të gjeneruara nga të njëjtat modele si pyetjet e provimeve. Përdori pasi ke parë pyetjet origjinale.</p>
+            <div class="examConfig">
+              <select id="drillTopic"></select>
+              <select id="drillDifficulty"><option value="all">Çdo vështirësi</option><option value="lehtë">Lehtë</option><option value="mesatare">Mesatare</option><option value="e vështirë">E vështirë</option></select>
+              <select id="drillCount"><option value="5">5 ushtrime</option><option value="10" selected>10 ushtrime</option><option value="15">15 ushtrime</option><option value="20">20 ushtrime</option></select>
+              <button class="primaryBtn" id="makeDrill">Gjenero stërvitje</button>
+              <button class="smallBtn" id="clearDrill">Pastro</button>
+            </div>
+          </div>
+          <div class="cards" id="drillCards"></div>
+        </div>
+
+        <div id="examView" class="hidden">
+          <div class="panel">
+            <h2>Modaliteti i provimit</h2>
+            <p class="muted">Bëje si provim real. Zgjidh në fletore. Në fund hap zgjidhjet dhe shëno saktë/gabim.</p>
+            <div class="examConfig">
+              <select id="examCount"><option value="8">8 pyetje</option><option value="10" selected>10 pyetje</option><option value="12">12 pyetje</option><option value="15">15 pyetje</option></select>
+              <select id="examMinutes"><option value="30">30 minuta</option><option value="45" selected>45 minuta</option><option value="60">60 minuta</option><option value="90">90 minuta</option></select>
+              <select id="examSource"><option value="mixed" selected>Origjinale + variante</option><option value="original">Sa më shumë origjinale</option><option value="variant">Vetëm variante</option></select>
+              <button class="primaryBtn" id="startExam">Fillo provimin</button>
+              <button class="smallBtn" id="resetExam">Rivendos</button>
+            </div>
+          </div>
+          <div class="panel hidden" id="examStatus">
+            <div class="split"><div><div class="timer" id="timer">45:00</div><div class="muted" id="scoreText">Rezultati: 0 saktë / 0 të kontrolluara</div></div><button class="smallBtn right" id="revealExam">Hap zgjidhjet</button></div>
+          </div>
+          <div class="cards" id="examCards"></div>
+        </div>
+
+        <div id="mistakesView" class="hidden">
+          <div class="panel split">
+            <div><h2>Gabimet e mia</h2><p class="muted">Këtu ruhen ushtrimet që i ke shënuar gabim. Kjo është lista më e rëndësishme para provimit.</p></div>
+            <button class="dangerBtn right" id="clearMistakes">Pastro gabimet</button>
+          </div>
+          <div class="cards" id="mistakeCards"></div>
+        </div>
+
+        <div id="formulasView" class="hidden">
+          <div class="panel">
+            <h2>Banka e formulave dhe metodave</h2>
+            <div class="formulaGrid" id="formulaGrid"></div>
+          </div>
+        </div>
+
+        <div id="planView" class="hidden">
+          <div class="panel printBox">
+            <h3>Plan mësimi për këtë stil provimi</h3>
+            <p><b>Rregulli kryesor:</b> çdo model duhet ta zgjidhësh në 3 nivele: pyetja origjinale, 3 variante të ngjashme, pastaj një variant në provim të përzier.</p>
+            <p><b>Dita 1:</b> Limite. Fokus: 0/0, faktorizim, racionalizim, pafundësi, trigonometrike. Synim: 20 ushtrime.</p>
+            <p><b>Dita 2:</b> Derivate. Fokus: polinome, herës, zinxhir, arccot/arctan, tangjente. Synim: 20 ushtrime.</p>
+            <p><b>Dita 3:</b> Integrale. Fokus: fuqi, zëvendësim, thyesa parciale, me pjesë. Synim: 15 ushtrime.</p>
+            <p><b>Dita 4:</b> Funksione. Fokus: domenë, monotoni, ekstremume, vazhdueshmëri, asimptota. Synim: 20 ushtrime.</p>
+            <p><b>Dita 5:</b> Syprina dhe konike. Fokus: prerje, sipër−poshtë, elipsë, kulm parabole. Synim: 15 ushtrime + 1 provim 45 minuta.</p>
+            <p><b>2 orë para provimit:</b> mos mëso tema të reja. Hape “Gabimet”, përsërit formulat dhe bëj vetëm një provim të shkurtër 30 minuta.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+<script>
+const formulas = [["Limiti me faktorizim", "Kur zëvendësimi direkt jep 0/0, faktorizo numëruesin dhe emëruesin, shkurto faktorin e përbashkët, pastaj zëvendëso."], ["Racionalizimi", "Për shprehje si √A − √B, shumëzo me të konjuguarën: √A + √B."], ["Limiti në pafundësi", "Te funksionet racionale krahaso fuqitë më të larta të x. Nëse gradat janë të barabarta, merret raporti i koeficientëve kryesorë."], ["Limitet trigonometrike", "lim(x→0) sinx/x = 1 dhe lim(x→0) (1−cosx)/x² = 1/2."], ["Rregulli i fuqisë", "Nëse f(x)=xⁿ, atëherë f′(x)=n·xⁿ⁻¹."], ["Rregulli i herësit", "Nëse f=u/v, atëherë f′=(u′v−uv′)/v²."], ["Rregulli zinxhir", "Nëse y=f(g(x)), atëherë y′=f′(g(x))·g′(x)."], ["Derivati i arccot", "Nëse y=arccot(u), atëherë y′=−u′/(1+u²)."], ["Monotonia", "f′(x)>0 do të thotë funksioni është rritës; f′(x)<0 do të thotë funksioni është zbritës."], ["Ekstremumet", "Pikat kritike gjenden kur f′(x)=0 ose kur derivati nuk ekziston."], ["Syprina mes dy lakoreve", "S = ∫ nga a deri b [funksioni sipër − funksioni poshtë] dx."], ["Asimptota vertikale", "Te funksionet racionale: emëruesi = 0, pas thjeshtimit, jep kandidatët për asimptotë vertikale."], ["Asimptota horizontale", "Krahaso gradat. Nëse janë të barabarta, asimptota është raporti i koeficientëve kryesorë."], ["Asimptota e pjerrët", "Nëse grada e numëruesit është saktësisht një më e madhe se grada e emëruesit, bëhet pjestimi polinomial."], ["Integrimi me pjesë", "∫u dv = uv − ∫v du."], ["Thyesat parciale", "Funksioni racional ndahet në thyesa më të thjeshta para integrimit."], ["Elipsa", "Për x²/a² + y²/b² = 1, syprina është S=πab."], ["Parabola", "Për y=ax²+bx+c, kulmi ka x=−b/(2a)."]];
+const originalQuestions = [{"id": "L1", "topic": "Limite", "difficulty": "lehtë", "title": "Limit me faktorizim", "q": "Gjej: lim<sub>x→1</sub> (x² − 1)/(x − 1)", "method": "Zëvendësimi direkt jep 0/0, prandaj faktorizojmë dhe shkurtojmë.", "steps": ["Zëvendëso x=1: (1²−1)/(1−1)=0/0. Kjo është formë e pacaktuar.", "Faktorizo numëruesin: x²−1=(x−1)(x+1).", "Shkurto faktorin e përbashkët (x−1). Kjo lejohet sepse limiti shikon vlerat afër x=1, jo saktësisht në x=1.", "Tani mbetet lim<sub>x→1</sub> (x+1).", "Zëvendëso x=1 dhe merr 1+1=2."], "answer": "2"}, {"id": "L2", "topic": "Limite", "difficulty": "mesatare", "title": "Limit me racionalizim", "q": "Gjej: lim<sub>x→0</sub> (√(1+x) − 1)/x", "method": "Përdor të konjuguarën, sepse kemi diferencë me rrënjë katrore.", "steps": ["Zëvendësimi direkt jep (√1−1)/0 = 0/0.", "Shumëzo numëruesin dhe emëruesin me të konjuguarën: √(1+x)+1.", "Numëruesi bëhet (√(1+x)−1)(√(1+x)+1) = (1+x)−1 = x.", "Shprehja bëhet x / [x(√(1+x)+1)].", "Shkurto x dhe mbetet 1/(√(1+x)+1).", "Zëvendëso x=0: 1/(1+1)=1/2."], "answer": "1/2"}, {"id": "L3", "topic": "Limite", "difficulty": "mesatare", "title": "Limit në pafundësi", "q": "Gjej: lim<sub>x→∞</sub> (3x² − 5x + 1)/(2x² + 7)", "method": "Kur gradat janë të barabarta, merret raporti i koeficientëve të fuqisë më të lartë.", "steps": ["Fuqia më e lartë në numërues dhe emërues është x².", "Pjesëto çdo term me x².", "Marrim (3 − 5/x + 1/x²)/(2 + 7/x²).", "Kur x→∞, termat 5/x, 1/x² dhe 7/x² shkojnë në 0.", "Mbetet 3/2."], "answer": "3/2"}, {"id": "L4", "topic": "Limite", "difficulty": "mesatare", "title": "Limit trigonometrik standard", "q": "Gjej: lim<sub>x→0</sub> sin(5x)/(3x)", "method": "Ktheje në formën standarde sin(u)/u = 1.", "steps": ["Shkruaje sin(5x)/(3x) si [sin(5x)/(5x)] · [5/3].", "Kur x→0, edhe 5x→0.", "Sipas limitit standard, sin(5x)/(5x) → 1.", "Prandaj rezultati është 1·5/3 = 5/3."], "answer": "5/3"}, {"id": "L5", "topic": "Limite", "difficulty": "e vështirë", "title": "Limit racional i formës 0/0", "q": "Gjej: lim<sub>x→2</sub> (x² − 5x + 6)/(x² − 4)", "method": "Faktorizo të dy polinomet dhe shkurto faktorin e përbashkët.", "steps": ["Zëvendëso x=2: numëruesi 4−10+6=0 dhe emëruesi 4−4=0.", "Faktorizo numëruesin: x²−5x+6=(x−2)(x−3).", "Faktorizo emëruesin: x²−4=(x−2)(x+2).", "Shkurto faktorin (x−2).", "Mbetet lim<sub>x→2</sub> (x−3)/(x+2).", "Zëvendëso x=2: (2−3)/(2+2)=−1/4."], "answer": "−1/4"}, {"id": "D1", "topic": "Derivate", "difficulty": "mesatare", "title": "Derivati i polinomit", "q": "Gjej f′(x), nëse f(x)=x³−3x²−9x+1", "method": "Përdor rregullin e fuqisë për çdo term.", "steps": ["Derivati i x³ është 3x².", "Derivati i −3x² është −6x.", "Derivati i −9x është −9.", "Derivati i konstantës 1 është 0.", "Bashko termat."], "answer": "f′(x)=3x²−6x−9"}, {"id": "D2", "topic": "Derivate", "difficulty": "e vështirë", "title": "Derivati i shprehjes me arccot", "q": "Gjej f′(x), nëse f(x)=arccot((1+2x)/(x²−1))", "method": "Përdor formulën arccot(u)′ = −u′/(1+u²), pastaj rregullin e herësit për u.", "steps": ["Vendos u=(1+2x)/(x²−1). Atëherë f(x)=arccot(u).", "Formula është f′(x)=−u′/(1+u²).", "Për u përdor rregullin e herësit: u′=[2(x²−1)−(1+2x)(2x)]/(x²−1)².", "Thjeshto numëruesin: 2x²−2−2x−4x² = −2x²−2x−2 = −2(x²+x+1).", "Pra u′=−2(x²+x+1)/(x²−1)².", "Vendose në formulë: f′(x)=2(x²+x+1) / [(x²−1)² + (1+2x)²].", "Nëse e zgjeron emëruesin: (x²−1)²+(1+2x)² = x⁴+2x²+4x+2."], "answer": "f′(x)=2(x²+x+1)/(x⁴+2x²+4x+2), x≠±1"}, {"id": "D3", "topic": "Derivate", "difficulty": "mesatare", "title": "Rregulli i herësit", "q": "Gjej f′(x), nëse f(x)=(x²+1)/(x−1)", "method": "Përdor formulën (u/v)′=(u′v−uv′)/v².", "steps": ["Vendos u=x²+1 dhe v=x−1.", "Atëherë u′=2x dhe v′=1.", "Apliko formulën: f′(x)=[2x(x−1)−(x²+1)(1)]/(x−1)².", "Thjeshto numëruesin: 2x²−2x−x²−1 = x²−2x−1.", "Emëruesi mbetet (x−1)²."], "answer": "f′(x)=(x²−2x−1)/(x−1)²"}, {"id": "D4", "topic": "Derivate", "difficulty": "mesatare", "title": "Rregulli zinxhir", "q": "Gjej f′(x), nëse f(x)=√(3x²+2x−1)", "method": "Shkruaje rrënjën si fuqi 1/2 dhe përdor rregullin zinxhir.", "steps": ["Shkruaj f(x)=(3x²+2x−1)<sup>1/2</sup>.", "Derivati i jashtëm është (1/2)(3x²+2x−1)<sup>−1/2</sup>.", "Derivati i brendshëm është 6x+2.", "Shumëzo derivatin e jashtëm me derivatin e brendshëm.", "Thjeshto: (6x+2)/(2√(3x²+2x−1)) = (3x+1)/√(3x²+2x−1)."], "answer": "f′(x)=(3x+1)/√(3x²+2x−1)"}, {"id": "D5", "topic": "Derivate", "difficulty": "mesatare", "title": "Drejtëza tangjente", "q": "Gjej drejtëzën tangjente të f(x)=x²−4x+3 në pikën ku x=1.", "method": "Përdor y−y₀=m(x−x₀), ku m=f′(x₀).", "steps": ["Së pari gjej pikën: f(1)=1−4+3=0. Pika është (1,0).", "Gjej derivatin: f′(x)=2x−4.", "Pjerrësia në x=1 është f′(1)=2−4=−2.", "Përdor formulën e drejtëzës: y−0=−2(x−1).", "Thjeshto: y=−2x+2."], "answer": "y=−2x+2"}, {"id": "I1", "topic": "Integrale", "difficulty": "e vështirë", "title": "Integrali ∫eˣcosx dx", "q": "Llogarit: ∫ eˣ cosx dx", "method": "Përdor integrimin me pjesë dy herë.", "steps": ["Le të jetë I=∫eˣcosx dx.", "Zgjedh u=cosx dhe dv=eˣdx. Atëherë du=−sinx dx dhe v=eˣ.", "Nga formula del I=eˣcosx+∫eˣsinx dx.", "Vendos J=∫eˣsinx dx. Me pjesë del J=eˣsinx−∫eˣcosx dx = eˣsinx−I.", "Zëvendëso J te I: I=eˣcosx + eˣsinx − I.", "Pra 2I=eˣ(cosx+sinx).", "Pjesëto me 2 dhe shto konstantën C."], "answer": "∫eˣcosx dx = eˣ(cosx+sinx)/2 + C"}, {"id": "I2", "topic": "Integrale", "difficulty": "mesatare", "title": "Integral me zëvendësim", "q": "Llogarit: ∫ (2x+1)/(x²+x+5) dx", "method": "Numëruesi është derivati i emëruesit, prandaj përdor zëvendësimin.", "steps": ["Vendos u=x²+x+5.", "Atëherë du=(2x+1)dx.", "Integrali kthehet në ∫du/u.", "Rezultati është ln|u|+C.", "Kthe u: ln|x²+x+5|+C. Këtu vlera është gjithmonë pozitive, kështu që | | mund të hiqet."], "answer": "ln(x²+x+5)+C"}, {"id": "I3", "topic": "Integrale", "difficulty": "e vështirë", "title": "Thyesa parciale", "q": "Llogarit: ∫ 1/(x²−1) dx", "method": "Faktorizo emëruesin dhe përdor thyesa parciale.", "steps": ["Faktorizo: x²−1=(x−1)(x+1).", "Shkruaj 1/[(x−1)(x+1)] = A/(x−1)+B/(x+1).", "Shumëzo me (x−1)(x+1): 1=A(x+1)+B(x−1).", "Vendos x=1: 1=2A, pra A=1/2.", "Vendos x=−1: 1=−2B, pra B=−1/2.", "Tani integro: ∫[1/(2(x−1)) − 1/(2(x+1))]dx.", "Rezultati: (1/2)ln|x−1| − (1/2)ln|x+1| + C."], "answer": "(1/2)ln|(x−1)/(x+1)| + C"}, {"id": "I4", "topic": "Integrale", "difficulty": "lehtë", "title": "Integrali me rregullin e fuqisë", "q": "Llogarit: ∫(3x²−4x+5)dx", "method": "Integro çdo term veçmas me formulën ∫xⁿdx=xⁿ⁺¹/(n+1).", "steps": ["∫3x²dx = x³.", "∫−4xdx = −2x².", "∫5dx = 5x.", "Në fund shto konstantën C."], "answer": "x³−2x²+5x+C"}, {"id": "F1", "topic": "Funksione", "difficulty": "mesatare", "title": "Monotonia e vargut", "q": "Shqyrto monotoninë e vargut aₙ = 1 + 1/n, n≥1.", "method": "Krahaso aₙ₊₁ me aₙ.", "steps": ["Gjej aₙ₊₁ = 1 + 1/(n+1).", "Llogarit diferencën: aₙ₊₁ − aₙ = [1+1/(n+1)] − [1+1/n].", "Kjo jep 1/(n+1) − 1/n.", "Me emërues të përbashkët: [n − (n+1)]/[n(n+1)] = −1/[n(n+1)].", "Për n≥1, kjo është më e vogël se 0.", "Prandaj aₙ₊₁ < aₙ dhe vargu është zbritës."], "answer": "Vargu është rreptësisht zbritës dhe afrohet te 1 nga lart."}, {"id": "F2", "topic": "Funksione", "difficulty": "e vështirë", "title": "Monotonia dhe ekstremumet e funksionit", "q": "Shqyrto monotoninë dhe ekstremumet e f(x)=x³−3x²−9x+1.", "method": "Përdor derivatin dhe tabelën e shenjave.", "steps": ["Gjej derivatin: f′(x)=3x²−6x−9 = 3(x²−2x−3).", "Faktorizo: f′(x)=3(x−3)(x+1).", "Pikat kritike janë x=−1 dhe x=3.", "Për x<−1, derivati është pozitiv, prandaj funksioni është rritës.", "Për −1<x<3, derivati është negativ, prandaj funksioni është zbritës.", "Për x>3, derivati është pozitiv, prandaj funksioni është rritës.", "Në x=−1 shenja ndryshon nga + në −, prandaj kemi maksimum lokal. f(−1)=−1−3+9+1=6.", "Në x=3 shenja ndryshon nga − në +, prandaj kemi minimum lokal. f(3)=27−27−27+1=−26."], "answer": "Rritës: (−∞,−1)∪(3,∞). Zbritës: (−1,3). Maksimum: (−1,6). Minimum: (3,−26)."}, {"id": "F3", "topic": "Funksione", "difficulty": "mesatare", "title": "Domena me rrënjë dhe thyesë", "q": "Gjej domenën e f(x)=√(x−2)/(x+1).", "method": "Nënrrënjori duhet të jetë ≥0 dhe emëruesi nuk duhet të jetë 0.", "steps": ["Për √(x−2), kërkohet x−2 ≥ 0.", "Pra x ≥ 2.", "Për emëruesin x+1, kërkohet x+1≠0, pra x≠−1.", "Por kushti x≥2 e përjashton automatikisht −1.", "Prandaj domena është x≥2."], "answer": "[2,∞)"}, {"id": "F4", "topic": "Funksione", "difficulty": "e vështirë", "title": "Asimptotat e funksionit racional", "q": "Gjej asimptotat e f(x)=(x²+1)/(x−1).", "method": "Asimptota vertikale merret nga emëruesi; asimptota e pjerrët nga pjestimi polinomial.", "steps": ["Asimptota vertikale: x−1=0, prandaj x=1.", "Grada e numëruesit është 2 dhe grada e emëruesit është 1, prandaj ka asimptotë të pjerrët.", "Pjesëto x²+1 me x−1.", "Pjestimi jep x²+1=(x−1)(x+1)+2.", "Pra f(x)=x+1+2/(x−1).", "Kur x→±∞, 2/(x−1)→0.", "Prandaj asimptota e pjerrët është y=x+1."], "answer": "Vertikale: x=1. E pjerrët: y=x+1."}, {"id": "F5", "topic": "Funksione", "difficulty": "mesatare", "title": "Vazhdueshmëria e funksionit me pjesë", "q": "Gjej a që f(x)= { x²+a, x<1 ; 3x, x≥1 } të jetë i vazhdueshëm në x=1.", "method": "Limiti nga e majta duhet të jetë i barabartë me vlerën e funksionit në x=1.", "steps": ["Për x<1 kemi f(x)=x²+a. Limiti nga e majta në 1 është 1²+a = 1+a.", "Për x≥1 kemi f(1)=3·1=3.", "Vazhdueshmëria kërkon që këto të jenë të barabarta.", "Pra 1+a=3.", "Zgjidh: a=2."], "answer": "a=2"}, {"id": "A1", "topic": "Syprina", "difficulty": "e vështirë", "title": "Syprina mes parabolës dhe drejtëzës", "q": "Gjej syprinën e kufizuar nga y=−x²+2x dhe y=−x.", "method": "Gjej prerjet, përcakto funksionin sipër, pastaj integro sipër−poshtë.", "steps": ["Barazo lakoret: −x²+2x = −x.", "Kalo të gjitha në njërën anë: −x²+3x=0.", "Faktorizo: x(−x+3)=0, prandaj x=0 dhe x=3.", "Në intervalin [0,3], provo x=1: parabola jep 1, drejtëza jep −1. Parabola është sipër.", "Syprina është S = ∫₀³ [(-x²+2x) − (−x)] dx.", "Thjeshto integrandin: −x²+3x.", "Integro: ∫₀³(−x²+3x)dx = [−x³/3 + 3x²/2]₀³.", "Vlerëso: −27/3 + 27/2 = −9 + 13.5 = 4.5."], "answer": "9/2 njësi katrore"}, {"id": "A2", "topic": "Syprina", "difficulty": "e vështirë", "title": "Syprina: y=x²+4x dhe y=x+4", "q": "Gjej syprinën e figurës së kufizuar nga y=x²+4x dhe y=x+4.", "method": "Ky është tipi që shihet në fotografi: së pari prerjet, pastaj integrali sipër−poshtë.", "steps": ["Barazo: x²+4x = x+4.", "Kalo të gjitha në njërën anë: x²+3x−4=0.", "Faktorizo: (x+4)(x−1)=0, prandaj x=−4 dhe x=1.", "Në intervalin [−4,1], provo x=0: parabola jep 0, drejtëza jep 4. Drejtëza është sipër.", "Syprina është S = ∫₋₄¹ [(x+4) − (x²+4x)]dx.", "Thjeshto: ∫₋₄¹ (−x²−3x+4)dx.", "Primitive: −x³/3 − 3x²/2 + 4x.", "Vlerëso nga −4 deri në 1: F(1)=13/6 dhe F(−4)=−56/3.", "S = 13/6 − (−56/3)=13/6+112/6=125/6."], "answer": "125/6 njësi katrore"}, {"id": "A3", "topic": "Syprina", "difficulty": "mesatare", "title": "Syprina nën parabolë", "q": "Gjej syprinën nën y=x² nga x=0 deri x=2.", "method": "Përdor integral të caktuar, sepse funksioni është mbi boshtin x në këtë interval.", "steps": ["S = ∫₀² x² dx.", "Primitive e x² është x³/3.", "Vlerëso: [x³/3]₀² = 8/3 − 0.", "Syprina është pozitive."], "answer": "8/3 njësi katrore"}, {"id": "C1", "topic": "Konike", "difficulty": "mesatare", "title": "Syprina e elipsës", "q": "Gjej syprinën e elipsës x²/36 + y²/25 = 1.", "method": "Krahaso me formën standarde x²/a² + y²/b² = 1.", "steps": ["Forma standarde është x²/a² + y²/b² = 1.", "Këtu a²=36, prandaj a=6.", "Këtu b²=25, prandaj b=5.", "Formula e syprinës së elipsës është S=πab.", "Zëvendëso: S=π·6·5=30π."], "answer": "30π"}, {"id": "C2", "topic": "Konike", "difficulty": "mesatare", "title": "Kulmi i parabolës", "q": "Gjej kulmin e parabolës y=x²+4x.", "method": "Përdor formulën x=−b/(2a) ose plotëso katrorin.", "steps": ["Për y=ax²+bx+c, koordinata x e kulmit është x=−b/(2a).", "Këtu a=1 dhe b=4.", "Pra x=−4/(2·1)=−2.", "Gjej y: y=(−2)²+4(−2)=4−8=−4.", "Kulmi është (−2,−4)."], "answer": "Kulmi: (−2,−4)"}, {"id": "T1", "topic": "Teori", "difficulty": "lehtë", "title": "E saktë/e pasaktë: derivati dhe monotonia", "q": "E saktë apo e pasaktë: Nëse f′(x)>0 në një interval, atëherë f është rritës në atë interval.", "method": "Ky është rregull bazë i shenjës së derivatit.", "steps": ["Derivati pozitiv tregon pjerrësi pozitive.", "Pjerrësia pozitive në një interval do të thotë që vlerat e funksionit rriten kur x rritet.", "Prandaj funksioni është rritës."], "answer": "E saktë"}, {"id": "T2", "topic": "Teori", "difficulty": "lehtë", "title": "E saktë/e pasaktë: emëruesi zero", "q": "E saktë apo e pasaktë: Funksioni racional nuk është i përcaktuar aty ku emëruesi është zero.", "method": "Pjestimi me zero nuk lejohet.", "steps": ["Funksioni racional ka formën P(x)/Q(x).", "Emëruesi Q(x) nuk mund të jetë 0, sepse pjestimi me zero është i papërcaktuar.", "Prandaj ato vlera të x hiqen nga domena."], "answer": "E saktë"}, {"id": "T3", "topic": "Teori", "difficulty": "mesatare", "title": "Gabim i shpeshtë: shenja e syprinës", "q": "E saktë apo e pasaktë: Syprina mes dy lakoreve mund të dalë negative nëse poshtë zbritet nga sipër.", "method": "Syprina është gjithmonë jonegative kur vendoset si sipër−poshtë.", "steps": ["Formula e saktë është ∫(sipër−poshtë)dx.", "Në intervalin mes pikave të prerjes, sipër−poshtë është ≥0.", "Prandaj syprina nuk del negative kur renditja është e saktë.", "Rezultat negativ do të thotë që i ke zbritur funksionet në rend të gabuar."], "answer": "E pasaktë"}, {"id": "T4", "topic": "Teori", "difficulty": "mesatare", "title": "Gabim i shpeshtë: shkurtimi në limite", "q": "E saktë apo e pasaktë: Në limitin e formës 0/0 mund të shkurtohet faktori i përbashkët pas faktorizimit, sepse limiti studion vlerat afër pikës dhe jo pikën vetë.", "method": "Limiti varet nga sjellja afër pikës, jo nga vlera në pikë.", "steps": ["Shembull: (x²−1)/(x−1) = (x−1)(x+1)/(x−1).", "Në x=1 shprehja origjinale nuk është e përcaktuar, por limiti pyet çfarë ndodh afër x=1.", "Për x afër 1 dhe x≠1, shkurtimi është i vlefshëm.", "Pastaj limiti gjendet nga x+1."], "answer": "E saktë"}].map(q => ({...q, source:"Origjinale", original:true, hint:q.method || "Gjej metodën kryesore para se të hapësh zgjidhjen."}));
+
+function frac(n,d){
+  if(d < 0){ n = -n; d = -d; }
+  const g = gcd(Math.abs(n), Math.abs(d)); n/=g; d/=g;
+  if(d === 1) return String(n);
+  return `${n}/${d}`;
+}
+function gcd(a,b){ while(b){ const t=b; b=a%b; a=t; } return a || 1; }
+function sup(n){ return String(n).replace(/-/g,'⁻').replace(/0/g,'⁰').replace(/1/g,'¹').replace(/2/g,'²').replace(/3/g,'³').replace(/4/g,'⁴').replace(/5/g,'⁵').replace(/6/g,'⁶').replace(/7/g,'⁷').replace(/8/g,'⁸').replace(/9/g,'⁹'); }
+function sign(n){ return n >= 0 ? `+ ${n}` : `− ${Math.abs(n)}`; }
+function polyTerm(coef, body, first=false){
+  if(coef === 0) return "";
+  const abs = Math.abs(coef);
+  const c = abs === 1 && body ? "" : String(abs);
+  const term = c + body;
+  if(first) return coef < 0 ? "−" + term : term;
+  return coef < 0 ? ` − ${term}` : ` + ${term}`;
+}
+function fmtPi(n){ return n === 1 ? "π" : `${n}π`; }
+function makeQ(id, topic, difficulty, title, q, method, steps, answer, hint){ return {id, topic, difficulty, title, q, method, steps, answer, hint: hint || method, source:"Variant", original:false}; }
+
+function generateVariants(){
+  const out = [];
+  for(let i=1;i<=14;i++){
+    const a = [-5,-4,-3,-2,2,3,4,5,6,7,8,9,10,12][i-1];
+    out.push(makeQ(`V-L1-${i}`,"Limite", i%4===0?"mesatare":"lehtë", "Variant: limit me faktorizim", `Gjej: lim<sub>x→${a}</sub> (x² − ${a*a})/(x − ${a})`, "Faktorizo diferencën e katrorëve dhe shkurto faktorin e përbashkët.", [`Zëvendësimi direkt jep 0/0.`, `Faktorizo: x²−${a*a}=(x−${a})(x+${a}).`, `Shkurto (x−${a}).`, `Mbetet lim<sub>x→${a}</sub> (x+${a}).`, `Zëvendëso: ${a}+${a}=${2*a}.`], `${2*a}`));
+  }
+  for(let i=1;i<=10;i++){
+    const a = i+1, b = i+3;
+    out.push(makeQ(`V-L2-${i}`,"Limite","mesatare","Variant: 0/0 me dy faktorë", `Gjej: lim<sub>x→${a}</sub> (x² − ${a+b}x + ${a*b})/(x − ${a})`, "Faktorizo trinomin; një faktor anulohet me emëruesin.", [`Zëvendësimi direkt jep 0/0.`, `Numëruesi faktorizohet: x²−${a+b}x+${a*b}=(x−${a})(x−${b}).`, `Shkurto (x−${a}).`, `Mbetet lim<sub>x→${a}</sub> (x−${b}).`, `Rezultati: ${a}−${b}=${a-b}.`], `${a-b}`));
+  }
+  for(let i=1;i<=10;i++){
+    const k = i+1;
+    out.push(makeQ(`V-LR-${i}`,"Limite","mesatare","Variant: racionalizim", `Gjej: lim<sub>x→0</sub> (√(1+${k}x) − 1)/x`, "Shumëzo me të konjuguarën dhe pastaj shkurto x.", [`Zëvendësimi direkt jep 0/0.`, `Shumëzo me √(1+${k}x)+1.`, `Numëruesi bëhet (1+${k}x)−1=${k}x.`, `Shprehja bëhet ${k}x/[x(√(1+${k}x)+1)].`, `Shkurto x.`, `Zëvendëso x=0: ${k}/(1+1)=${frac(k,2)}.`], frac(k,2)));
+  }
+  for(let i=1;i<=10;i++){
+    const a = i+2, d = i+3, b = i%2 ? -5 : 4, c = i+1, e = i+5;
+    out.push(makeQ(`V-LINF-${i}`,"Limite","mesatare","Variant: limit në pafundësi", `Gjej: lim<sub>x→∞</sub> (${a}x² ${sign(b)}x + ${c})/(${d}x² + ${e})`, "Krahaso fuqitë më të larta; gradat janë të barabarta.", [`Fuqia më e lartë në të dy pjesët është x².`, `Pjesëto çdo term me x².`, `Termat me 1/x dhe 1/x² shkojnë në 0 kur x→∞.`, `Mbetet raporti i koeficientëve kryesorë: ${a}/${d}.`, `Rezultati i thjeshtuar është ${frac(a,d)}.`], frac(a,d)));
+  }
+  for(let i=1;i<=10;i++){
+    const k = i+2, m = i+3;
+    out.push(makeQ(`V-LTR-${i}`,"Limite","mesatare","Variant: limit trigonometrik", `Gjej: lim<sub>x→0</sub> sin(${k}x)/(${m}x)`, "Ktheje në formën sin(u)/u.", [`Shkruaj sin(${k}x)/(${m}x) = [sin(${k}x)/(${k}x)]·${k}/${m}.`, `Kur x→0, edhe ${k}x→0.`, `Sipas limitit standard, sin(${k}x)/(${k}x)→1.`, `Rezultati është ${k}/${m}=${frac(k,m)}.`], frac(k,m)));
+  }
+  for(let i=1;i<=10;i++){
+    const a=i%4+1, b=-(i+2), c=i%2? -9:7, d=i;
+    const f = `${polyTerm(a,'x³',true)}${polyTerm(b,'x²')}${polyTerm(c,'x')}${polyTerm(d,'')}`;
+    const fp = `${polyTerm(3*a,'x²',true)}${polyTerm(2*b,'x')}${polyTerm(c,'')}`;
+    out.push(makeQ(`V-DP-${i}`,"Derivate", i%3===0?"lehtë":"mesatare","Variant: derivat polinomi", `Gjej f′(x), nëse f(x)=${f}`, "Përdor rregullin e fuqisë për çdo term.", [`Derivati i ${a}x³ është ${3*a}x².`, `Derivati i ${b}x² është ${2*b}x.`, `Derivati i ${c}x është ${c}.`, `Derivati i konstantës ${d} është 0.`, `Bashko termat.`], `f′(x)=${fp}`));
+  }
+  for(let i=1;i<=8;i++){
+    const c=i+1, r=i%2?1+i:-(i+1);
+    out.push(makeQ(`V-DQ-${i}`,"Derivate","mesatare","Variant: rregulli i herësit", `Gjej f′(x), nëse f(x)=(x²+${c})/(x ${r>=0?`− ${r}`:`+ ${Math.abs(r)}`})`, "Përdor formulën (u/v)′=(u′v−uv′)/v².", [`Vendos u=x²+${c} dhe v=x${r>=0?`−${r}`:`+${Math.abs(r)}`}.`, `u′=2x dhe v′=1.`, `f′=[2x(x${r>=0?`−${r}`:`+${Math.abs(r)}`})−(x²+${c})]/(x${r>=0?`−${r}`:`+${Math.abs(r)}`})².`, `Thjeshto numëruesin: x² ${r>=0?`− ${2*r}x`:`+ ${2*Math.abs(r)}x`} − ${c}.`], `f′(x)=(x² ${r>=0?`− ${2*r}x`:`+ ${2*Math.abs(r)}x`} − ${c})/(x${r>=0?`−${r}`:`+${Math.abs(r)}`})²`));
+  }
+  for(let i=1;i<=8;i++){
+    const a=i+2, b=i%2?2*i:-(2*i+2), c=i+1;
+    out.push(makeQ(`V-DC-${i}`,"Derivate","mesatare","Variant: rregulli zinxhir", `Gjej f′(x), nëse f(x)=√(${a}x² ${sign(b)}x + ${c})`, "Rrënjën shkruaje si fuqi 1/2 dhe shumëzo me derivatin e brendshëm.", [`f(x)=(${a}x² ${sign(b)}x + ${c})<sup>1/2</sup>.`, `Derivati i brendshëm është ${2*a}x ${sign(b)}.`, `f′(x)=(${2*a}x ${sign(b)})/[2√(${a}x² ${sign(b)}x + ${c})].`, `Mund ta lësh kështu ose ta thjeshtosh nëse ka faktor të përbashkët.`], `f′(x)=(${2*a}x ${sign(b)})/(2√(${a}x² ${sign(b)}x + ${c}))`));
+  }
+  for(let i=1;i<=8;i++){
+    const a=1, b=-(i+3), c=i, x0=i-3;
+    const y0=x0*x0+b*x0+c, m=2*x0+b;
+    out.push(makeQ(`V-DT-${i}`,"Derivate","mesatare","Variant: drejtëza tangjente", `Gjej drejtëzën tangjente të f(x)=x² ${sign(b)}x + ${c} në pikën ku x=${x0}.`, "Gjej pikën, pastaj pjerrësinë me derivat.", [`Gjej pikën: f(${x0})=${y0}.`, `Derivati është f′(x)=2x ${sign(b)}.`, `Pjerrësia është m=f′(${x0})=${m}.`, `Formula: y−${y0}=${m}(x−${x0}).`, `Kjo është drejtëza tangjente.`], `y−${y0}=${m}(x−${x0})`));
+  }
+  for(let i=1;i<=10;i++){
+    const a=i+1, b=-(i+2), c=i%2?5:-4;
+    out.push(makeQ(`V-IP-${i}`,"Integrale", i%3===0?"lehtë":"mesatare","Variant: integral polinomi", `Llogarit: ∫(${a}x² ${sign(b)}x ${sign(c)})dx`, "Integro çdo term veçmas.", [`∫${a}x²dx=${a}x³/3.`, `∫(${b}x)dx=${b}x²/2.`, `∫${c}dx=${c}x.`, `Shto konstantën C.`], `${frac(a,3)}x³ ${b>=0?`+ ${frac(b,2)}x²`:`− ${frac(Math.abs(b),2)}x²`} ${c>=0?`+ ${c}x`:`− ${Math.abs(c)}x`} + C`));
+  }
+  for(let i=1;i<=8;i++){
+    const a=i+1, b=i+3;
+    out.push(makeQ(`V-IS-${i}`,"Integrale","mesatare","Variant: integral me zëvendësim", `Llogarit: ∫ (${2*a}x + ${b})/(${a}x² + ${b}x + ${i+5}) dx`, "Numëruesi është derivati i emëruesit.", [`Vendos u=${a}x²+${b}x+${i+5}.`, `du=(${2*a}x+${b})dx.`, `Integrali bëhet ∫du/u.`, `Rezultati është ln|u|+C.`, `Kthe u në shprehjen fillestare.`], `ln|${a}x² + ${b}x + ${i+5}| + C`));
+  }
+  for(let i=1;i<=8;i++){
+    const a=i+1;
+    out.push(makeQ(`V-IPF-${i}`,"Integrale","e vështirë","Variant: thyesa parciale", `Llogarit: ∫ 1/(x² − ${a*a}) dx`, "Faktorizo x²−a² dhe nda në thyesa parciale.", [`Faktorizo: x²−${a*a}=(x−${a})(x+${a}).`, `Shkruaj 1/[(x−${a})(x+${a})]=A/(x−${a})+B/(x+${a}).`, `Nga zëvendësimi del A=1/${2*a}, B=−1/${2*a}.`, `Integro secilën thyesë.`, `Bashko logaritmet.`], `${frac(1,2*a)}ln|(x−${a})/(x+${a})| + C`));
+  }
+  for(let i=1;i<=8;i++){
+    const a=i+1, b=-(i+2); // b below a usually
+    out.push(makeQ(`V-FD-${i}`,"Funksione","mesatare","Variant: domenë", `Gjej domenën e f(x)=√(x−${a})/(x ${b>=0?`− ${b}`:`+ ${Math.abs(b)}`})`, "Nënrrënjori duhet të jetë ≥0 dhe emëruesi ≠0.", [`Kushti nga rrënja: x−${a}≥0, pra x≥${a}.`, `Kushti nga emëruesi: x${b>=0?`−${b}`:`+${Math.abs(b)}`}≠0, pra x≠${b}.`, `Vlera ${b} nuk ndodhet në intervalin x≥${a}.`, `Prandaj domena mbetet [${a},∞).`], `[${a},∞)`));
+  }
+  for(let i=1;i<=8;i++){
+    const r=i%2?i+1:-(i+1), c=i+2;
+    out.push(makeQ(`V-FA-${i}`,"Funksione","e vështirë","Variant: asimptota", `Gjej asimptotat e f(x)=(x²+${c})/(x ${r>=0?`− ${r}`:`+ ${Math.abs(r)}`}).`, "Asimptota vertikale nga emëruesi; e pjerrët me pjestim polinomial.", [`Asimptota vertikale: x${r>=0?`−${r}`:`+${Math.abs(r)}`}=0, pra x=${r}.`, `Grada e numëruesit është 2 dhe e emëruesit 1, prandaj ka asimptotë të pjerrët.`, `Pjestimi jep f(x)=x ${sign(r)} + mbetje/(x${r>=0?`−${r}`:`+${Math.abs(r)}`}).`, `Kur x→±∞, pjesa me mbetje shkon në 0.`, `Asimptota e pjerrët është y=x ${sign(r)}.`], `Vertikale: x=${r}. E pjerrët: y=x ${sign(r)}.`));
+  }
+  for(let i=1;i<=8;i++){
+    const k=i+2;
+    out.push(makeQ(`V-FC-${i}`,"Funksione","mesatare","Variant: vazhdueshmëri", `Gjej a që f(x)= { x²+a, x<1 ; ${k}x, x≥1 } të jetë i vazhdueshëm në x=1.`, "Barazo limitin nga e majta me vlerën në pikë.", [`Nga e majta: lim<sub>x→1−</sub>(x²+a)=1+a.`, `Vlera në pikë nga pjesa e dytë është f(1)=${k}.`, `Vazhdueshmëria kërkon 1+a=${k}.`, `Prandaj a=${k-1}.`], `a=${k-1}`));
+  }
+  for(let i=1;i<=10;i++){
+    const p=i+1, k=i%4+1, end=p+k;
+    out.push(makeQ(`V-S-${i}`,"Syprina","e vështirë","Variant: syprina mes parabolës dhe drejtëzës", `Gjej syprinën e kufizuar nga y=−x²+${p}x dhe y=−${k}x.`, "Gjej prerjet dhe integro funksioni sipër minus funksioni poshtë.", [`Barazo: −x²+${p}x = −${k}x.`, `Kalo në njërën anë: −x²+${p+k}x=0.`, `Faktorizo: x(−x+${p+k})=0, prandaj x=0 dhe x=${p+k}.`, `Në intervalin [0,${p+k}], parabola është sipër drejtëzës.`, `S=∫₀^${p+k} [−x²+${p}x−(−${k}x)]dx = ∫₀^${p+k}(−x²+${p+k}x)dx.`, `Formula jep S=(${p+k})³/6.`], frac(end*end*end,6))); 
+  }
+  for(let i=1;i<=8;i++){
+    const a=i+3, b=i+2;
+    out.push(makeQ(`V-E-${i}`,"Konike","mesatare","Variant: syprina e elipsës", `Gjej syprinën e elipsës x²/${a*a} + y²/${b*b} = 1.`, "Krahaso me x²/a² + y²/b² = 1 dhe përdor S=πab.", [`a²=${a*a}, prandaj a=${a}.`, `b²=${b*b}, prandaj b=${b}.`, `Formula: S=πab.`, `S=π·${a}·${b}=${a*b}π.`], fmtPi(a*b)));
+  }
+  for(let i=1;i<=8;i++){
+    const b=2*(i-4), c=i;
+    const xv = -b/2, yv = xv*xv + b*xv + c;
+    out.push(makeQ(`V-P-${i}`,"Konike","mesatare","Variant: kulmi i parabolës", `Gjej kulmin e parabolës y=x² ${sign(b)}x + ${c}.`, "Përdor x=−b/(2a).", [`Këtu a=1 dhe b=${b}.`, `x i kulmit është x=−(${b})/(2·1)=${xv}.`, `Gjej y duke zëvendësuar x=${xv}.`, `y=${yv}.`], `Kulmi: (${xv},${yv})`));
+  }
+  return out;
+}
+
+const variantQuestions = generateVariants();
+let allQuestions = [...originalQuestions, ...variantQuestions];
+let activeTopic = "Të gjitha";
+let mastered = JSON.parse(localStorage.getItem("mathMastered_sq_v2") || "{}");
+let stats = JSON.parse(localStorage.getItem("mathStats_sq_v2") || "{}");
+let wrongLog = JSON.parse(localStorage.getItem("mathWrongLog_sq_v2") || "[]");
+let currentDrillIds = [];
+let exam = { ids: [], checked: {}, timer:null, remaining:0, revealed:false };
+
+function $(id){ return document.getElementById(id); }
+function escapeHTML(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+function diffRank(d){ return d === "e vështirë" ? 3 : d === "mesatare" ? 2 : 1; }
+function getQuestion(id){ return allQuestions.find(q => q.id === id); }
+function uniqueTopics(){ return ["Të gjitha", ...Array.from(new Set(allQuestions.map(q => q.topic)))]; }
+function topicCount(t){ return t === "Të gjitha" ? allQuestions.length : allQuestions.filter(q => q.topic === t).length; }
+function isWrong(id){ return (stats[id]?.wrong || 0) > 0; }
+function attempts(id){ return stats[id] || {correct:0, wrong:0}; }
+function save(){ localStorage.setItem("mathMastered_sq_v2", JSON.stringify(mastered)); localStorage.setItem("mathStats_sq_v2", JSON.stringify(stats)); localStorage.setItem("mathWrongLog_sq_v2", JSON.stringify(wrongLog.slice(0,80))); }
+function shuffle(arr){ return [...arr].sort(() => Math.random() - .5); }
+
+function renderTopics(){
+  const box = $("topicList"); box.innerHTML = "";
+  uniqueTopics().forEach(t => {
+    const btn = document.createElement("button");
+    btn.className = "topicBtn" + (activeTopic === t ? " active" : "");
+    btn.innerHTML = `${escapeHTML(t)}<span class="pill">${topicCount(t)}</span>`;
+    btn.onclick = () => { activeTopic = t; renderTopics(); syncTopicSelectors(); renderCards(); renderDashboard(); };
+    box.appendChild(btn);
+  });
+}
+function syncTopicSelectors(){
+  ["drillTopic"].forEach(id => {
+    const el = $(id); if(!el) return;
+    const old = el.value || "Të gjitha";
+    el.innerHTML = uniqueTopics().map(t => `<option value="${escapeHTML(t)}">${escapeHTML(t)}</option>`).join("");
+    el.value = uniqueTopics().includes(activeTopic) ? activeTopic : (uniqueTopics().includes(old)?old:"Të gjitha");
+  });
+}
+function filteredQuestions(){
+  const search = ($("searchBox")?.value || "").toLowerCase().trim();
+  const diff = $("difficultyBox")?.value || "all";
+  const source = $("sourceBox")?.value || "all";
+  const sort = $("sortBox")?.value || "examFirst";
+  let list = allQuestions.filter(item => {
+    const topicOk = activeTopic === "Të gjitha" || item.topic === activeTopic;
+    const diffOk = diff === "all" || item.difficulty === diff;
+    const sourceOk = source === "all" || (source === "original" && item.original) || (source === "variant" && !item.original) || (source === "wrong" && isWrong(item.id)) || (source === "unmastered" && !mastered[item.id]);
+    const text = `${item.topic} ${item.title} ${item.q} ${item.method} ${item.answer}`.toLowerCase();
+    return topicOk && diffOk && sourceOk && (!search || text.includes(search));
+  });
+  list.sort((a,b) => {
+    if(sort === "topic") return a.topic.localeCompare(b.topic) || a.id.localeCompare(b.id);
+    if(sort === "hardFirst") return diffRank(b.difficulty) - diffRank(a.difficulty);
+    if(sort === "weakFirst") return (attempts(b.id).wrong - attempts(a.id).wrong) || (Number(b.original)-Number(a.original));
+    return Number(b.original) - Number(a.original) || a.topic.localeCompare(b.topic) || a.id.localeCompare(b.id);
+  });
+  return list;
+}
+function sourceTag(item){ return item.original ? `<span class="tag accent">pyetje origjinale</span>` : `<span class="tag">variant</span>`; }
+function cardHTML(item, opts={}){
+  const isMastered = !!mastered[item.id];
+  const st = attempts(item.id);
+  const status = isMastered ? `<span class="tag good">e zotëruar</span>` : isWrong(item.id) ? `<span class="tag bad">ka gabime</span>` : `<span class="tag warn">për ushtrim</span>`;
+  const examMode = !!opts.examMode;
+  const hideCheck = !!opts.hideCheck;
+  return `
+    <article class="card ${isMastered?'mastered':''} ${isWrong(item.id)?'weak':''}" data-id="${escapeHTML(item.id)}">
+      <div class="cardHead">
+        <div class="meta">
+          <span class="tag">${escapeHTML(item.topic)}</span>
+          <span class="tag">${escapeHTML(item.difficulty)}</span>
+          ${sourceTag(item)} ${status}
+          ${st.correct || st.wrong ? `<span class="tag">${st.correct} saktë / ${st.wrong} gabim</span>` : ""}
+        </div>
+        <div class="question"><b>${escapeHTML(item.id)}. ${escapeHTML(item.title)}</b><br>${item.q}</div>
+        <div class="hint note"><b>Hint:</b> ${item.hint || item.method}</div>
+      </div>
+      <div class="cardBody">
+        <div class="method">Metoda: ${item.method}</div>
+        <ol class="steps">${item.steps.map(s => `<li>${s}</li>`).join("")}</ol>
+        <div class="answer">Përgjigjja finale: ${item.answer}</div>
+      </div>
+      <div class="buttons">
+        <button class="smallBtn" onclick="toggleHint('${item.id}')">Hint</button>
+        <button class="smallBtn" onclick="toggleSolution('${item.id}')">Shfaq / fshih zgjidhjen</button>
+        ${hideCheck?"":`<button class="smallBtn successBtn" onclick="markAttempt('${item.id}', true)">E zgjidha saktë</button><button class="smallBtn dangerBtn" onclick="markAttempt('${item.id}', false)">E kisha gabim</button><button class="smallBtn" onclick="toggleMastered('${item.id}')">${isMastered ? "Hiqe zotërimin" : "Shëno të zotëruar"}</button>`}
+        ${examMode ? `<button class="smallBtn successBtn" onclick="markExam('${item.id}', true)">Në provim: saktë</button><button class="smallBtn dangerBtn" onclick="markExam('${item.id}', false)">Në provim: gabim</button>` : ""}
+      </div>
+    </article>`;
+}
+function renderCards(){
+  const list = filteredQuestions();
+  $("cards").innerHTML = list.length ? list.map(q => cardHTML(q)).join("") : `<div class="panel empty">Nuk u gjet asnjë pyetje me këtë filtër.</div>`;
+  updateProgress();
+}
+function renderFormulaBank(){
+  const extra = [["Metoda 3-hapëshe", "1) Identifiko tipin e detyrës. 2) Shkruaj formulën. 3) Zëvendëso numrat ngadalë."],["Kontrolli para përgjigjes", "Shiko shenjën, domenën, konstantën +C te integralet dhe intervalin te syprinat."],["Syprina negative", "Nëse del negative, ke zbritur funksionet gabim. Syprina merret gjithmonë si sipër−poshtë."],["Gabimi më i shpeshtë", "Hapja e zgjidhjes shumë herët. Provo 3 minuta para çdo hint-i."]];
+  $("formulaGrid").innerHTML = [...formulas, ...extra].map(([name, desc]) => `<div class="formula"><b>${name}</b><br><span class="muted">${desc}</span></div>`).join("");
+}
+function toggleHint(id){ document.querySelectorAll(`.card[data-id="${id}"]`).forEach(c => c.classList.toggle("showHint")); }
+function toggleSolution(id){ document.querySelectorAll(`.card[data-id="${id}"]`).forEach(c => c.classList.toggle("open")); }
+function openAllSolutions(){ document.querySelectorAll("#cards .card").forEach(c => c.classList.add("open")); }
+function toggleMastered(id){ if(mastered[id]) delete mastered[id]; else mastered[id] = true; save(); refreshAll(); }
+function markAttempt(id, correct){
+  const q = getQuestion(id); if(!q) return;
+  stats[id] = stats[id] || {correct:0, wrong:0};
+  if(correct){ stats[id].correct++; if(stats[id].correct >= 2) mastered[id] = true; }
+  else {
+    stats[id].wrong++; delete mastered[id];
+    wrongLog.unshift({id:q.id, title:q.title, topic:q.topic, source:q.source, at:new Date().toISOString(), q:q.q, answer:q.answer});
+    wrongLog = wrongLog.slice(0,80);
+  }
+  stats[id].last = new Date().toISOString();
+  save(); refreshAll();
+}
+function updateProgress(){
+  const total = allQuestions.length;
+  const count = Object.keys(mastered).filter(id => getQuestion(id)).length;
+  $("masteredCount").textContent = `${count}/${total}`;
+  $("progressBar").style.width = `${total ? (count/total)*100 : 0}%`;
+  $("bankCount").textContent = total;
+  $("bankBreakdown").textContent = `${originalQuestions.length} origjinale · ${variantQuestions.length} variante`;
+}
+function renderDashboard(){
+  const total = allQuestions.length, orig = originalQuestions.length, vars = variantQuestions.length;
+  const masteredN = Object.keys(mastered).filter(id => getQuestion(id)).length;
+  const wrongN = wrongLog.length;
+  const hardN = allQuestions.filter(q => q.difficulty === "e vështirë").length;
+  $("dashboardStats").innerHTML = [
+    ["Pyetje origjinale", orig, "nga fotot/provimet e kaluara"],
+    ["Variante shtesë", vars, "të njëjtat metoda me numra të tjerë"],
+    ["Të vështira", hardN, "duhet t’i bësh dy herë"],
+    ["Progres", `${masteredN}/${total}`, "shënohet në këtë shfletues"],
+    ["Gabime të ruajtura", wrongN, "përsëriti para provimit"],
+    ["Synimi minimal", "80%", "para se të ndihesh gati"]
+  ].map(([a,b,c]) => `<div class="note"><b style="font-size:24px;color:white">${b}</b><br>${a}<br><span class="muted">${c}</span></div>`).join("");
+  const rows = uniqueTopics().filter(t => t !== "Të gjitha").map(t => {
+    const qs = allQuestions.filter(q => q.topic === t);
+    const m = qs.filter(q => mastered[q.id]).length;
+    const w = qs.reduce((sum,q)=>sum+(attempts(q.id).wrong||0),0);
+    return `<tr><td><b>${escapeHTML(t)}</b></td><td>${qs.length}</td><td>${m}/${qs.length}</td><td>${w}</td><td>${Math.round((m/qs.length)*100)}%</td></tr>`;
+  }).join("");
+  $("topicTable").innerHTML = `<thead><tr><th>Tema</th><th>Pyetje</th><th>Të zotëruara</th><th>Gabime</th><th>Progres</th></tr></thead><tbody>${rows}</tbody>`;
+}
+function makeDrill(){
+  const topic = $("drillTopic").value;
+  const diff = $("drillDifficulty").value;
+  const count = Number($("drillCount").value);
+  let pool = variantQuestions.filter(q => (topic === "Të gjitha" || q.topic === topic) && (diff === "all" || q.difficulty === diff));
+  if(pool.length < count){ pool = allQuestions.filter(q => (topic === "Të gjitha" || q.topic === topic) && (diff === "all" || q.difficulty === diff)); }
+  currentDrillIds = shuffle(pool).slice(0,count).map(q => q.id);
+  renderDrill();
+}
+function renderDrill(){
+  const selected = currentDrillIds.map(getQuestion).filter(Boolean);
+  $("drillCards").innerHTML = selected.length ? selected.map(q => cardHTML(q)).join("") : `<div class="panel empty">Zgjidh temën dhe shtyp “Gjenero stërvitje”.</div>`;
+}
+function clearDrill(){ currentDrillIds = []; renderDrill(); }
+function startExam(){
+  const count = Number($("examCount").value), minutes = Number($("examMinutes").value), source = $("examSource").value;
+  let pool;
+  if(source === "original") pool = [...originalQuestions, ...shuffle(variantQuestions)].slice(0, Math.max(count, originalQuestions.length));
+  else if(source === "variant") pool = variantQuestions;
+  else pool = allQuestions;
+  exam.ids = shuffle(pool).slice(0,count).map(q => q.id);
+  exam.checked = {}; exam.remaining = minutes*60; exam.revealed = false;
+  if(exam.timer) clearInterval(exam.timer);
+  exam.timer = setInterval(tick,1000);
+  $("examStatus").classList.remove("hidden");
+  tick(); renderExamCards();
+}
+function tick(){
+  const m = Math.floor(exam.remaining/60).toString().padStart(2,"0"), s = (exam.remaining%60).toString().padStart(2,"0");
+  $("timer").textContent = `${m}:${s}`;
+  if(exam.remaining <= 0){ clearInterval(exam.timer); $("timer").textContent = "Koha mbaroi"; revealExam(); return; }
+  exam.remaining--;
+}
+function renderExamCards(){
+  const selected = exam.ids.map(getQuestion).filter(Boolean);
+  $("examCards").innerHTML = selected.length ? selected.map(q => cardHTML(q, {examMode:true, hideCheck:false})).join("") : `<div class="panel empty">Shtyp “Fillo provimin”.</div>`;
+  if(exam.revealed) document.querySelectorAll("#examCards .card").forEach(c => c.classList.add("open"));
+  updateExamScore();
+}
+function markExam(id, correct){ exam.checked[id] = correct; markAttempt(id, correct); updateExamScore(); }
+function updateExamScore(){
+  const checked = Object.keys(exam.checked).length;
+  const correct = Object.values(exam.checked).filter(Boolean).length;
+  $("scoreText").textContent = `Rezultati: ${correct} saktë / ${checked} të kontrolluara`;
+}
+function revealExam(){ exam.revealed = true; document.querySelectorAll("#examCards .card").forEach(c => c.classList.add("open")); }
+function resetExam(){ exam.ids=[]; exam.checked={}; exam.revealed=false; if(exam.timer) clearInterval(exam.timer); $("examStatus").classList.add("hidden"); $("examCards").innerHTML=""; }
+function renderMistakes(){
+  if(!wrongLog.length){ $("mistakeCards").innerHTML = `<div class="panel empty">Nuk ke gabime të ruajtura. Kjo është mirë, por vetëm nëse ke ushtruar realisht.</div>`; return; }
+  const seen = new Set();
+  const ids = wrongLog.map(x=>x.id).filter(id => { if(seen.has(id)) return false; seen.add(id); return true; });
+  const qs = ids.map(getQuestion).filter(Boolean);
+  $("mistakeCards").innerHTML = qs.map(q => cardHTML(q)).join("");
+}
+function clearMistakes(){ wrongLog=[]; Object.keys(stats).forEach(id => { if(stats[id]) stats[id].wrong = 0; }); save(); refreshAll(); }
+function switchMode(mode){
+  document.querySelectorAll("#modeNav button").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
+  ["dashboard","learn","drill","exam","mistakes","formulas","plan"].forEach(m => $(m+"View").classList.toggle("hidden", m !== mode));
+  if(mode === "dashboard") renderDashboard();
+  if(mode === "learn") renderCards();
+  if(mode === "drill") renderDrill();
+  if(mode === "mistakes") renderMistakes();
+}
+function refreshAll(){ updateProgress(); renderDashboard(); renderCards(); renderDrill(); renderMistakes(); if(exam.ids.length) renderExamCards(); }
+
+window.toggleHint = toggleHint; window.toggleSolution = toggleSolution; window.toggleMastered = toggleMastered; window.markAttempt = markAttempt; window.markExam = markExam;
+document.querySelectorAll("#modeNav button").forEach(btn => btn.addEventListener("click", () => switchMode(btn.dataset.mode)));
+["searchBox","difficultyBox","sourceBox","sortBox"].forEach(id => $(id).addEventListener("input", renderCards));
+$("printBtn").addEventListener("click", () => window.print());
+$("showAllBtn").addEventListener("click", openAllSolutions);
+$("makeDrill").addEventListener("click", makeDrill); $("clearDrill").addEventListener("click", clearDrill);
+$("startExam").addEventListener("click", startExam); $("resetExam").addEventListener("click", resetExam); $("revealExam").addEventListener("click", revealExam);
+$("clearMistakes").addEventListener("click", clearMistakes);
+renderTopics(); syncTopicSelectors(); renderFormulaBank(); refreshAll();
+</script>
+</body>
+</html>
