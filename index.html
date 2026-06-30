@@ -26,7 +26,7 @@
     <div>
       <h1>Matematikë për provim</h1>
       <p class="lead">Puno me njohjen e tipit, arsyetimin dhe zgjidhjen e plotë — jo me ushtrime që krijojnë besim të rremë.</p>
-      <div class="incomplete">Banka finale e pyetjeve ende duhet plotësuar nga fotot reale.</div>
+      <div class="incomplete" id="bankSafetyNotice">Banka reale ende nuk është vendosur. Mos studio nga ky version.</div>
     </div>
     <div class="counter"><strong id="confirmedCount">0</strong><span class="muted">pyetje të konfirmuara</span></div>
   </header>
@@ -154,6 +154,7 @@
       provim real. Prandaj të gjithë janë needs_confirmation dhe nuk
       futen në Exam Mode. Mund të fshihen sapo të vendoset banka finale.
     */
+    /* SHEMBUJ VETËM PËR ZHVILLUESIN — NUK EKZEKUTOHEN DHE NUK SHFAQEN.
     const placeholderQuestionBank = [
       {
         id:"PH-LIM-01",topic:"Limite",difficulty:"Nivel provimi",source:"Placeholder demonstrues — kërkon foto/burim",status:"needs_confirmation",
@@ -244,6 +245,7 @@
         ]
       }
     ];
+    */
 
     const formulas = [
       ["Limiti 0/0","Faktorizo, racionalizo ose përdor zhvillim; mos trajto 0/0 si numër."],
@@ -264,8 +266,8 @@
 
     const $ = id => document.getElementById(id);
     const confirmedQuestions = () => examQuestionBank.filter(q => q.status === "confirmed");
-    const pendingQuestions = () => [...examQuestionBank, ...placeholderQuestionBank].filter(q => q.status === "needs_confirmation");
-    const allBaseQuestions = () => [...examQuestionBank, ...placeholderQuestionBank];
+    const pendingQuestions = () => examQuestionBank.filter(q => q.status === "needs_confirmation");
+    const allBaseQuestions = () => [...examQuestionBank];
     const allVariants = () => allBaseQuestions().flatMap(parent => (parent.variants || []).map(v => ({
       ...v,
       topic:parent.topic,
@@ -355,7 +357,8 @@
       $("confirmedCount").textContent=confirmedQuestions().length;
       $("statConfirmed").textContent=confirmedQuestions().filter(q=>q.difficulty!=="Bazë / Warm-up").length;
       $("statVariants").textContent=allVariants().length;
-      $("statMistakes").textContent=state.mistakes.length;
+      $("statMistakes").textContent=state.mistakes.filter(id=>allQuestions().some(q=>q.id===id)).length;
+      $("bankSafetyNotice").classList.toggle("hidden", confirmedQuestions().length > 0);
     }
     function renderDrill(){
       const topic=$("drillTopic").value;
